@@ -50,17 +50,20 @@ export const handler = async (event, context) => {
 
   for (let i = 0; i < dates.length; i++) {
     const event = dates[i]
-    calendar.events.insert({
-      auth: jwtClient,
-      calendarId: process.env.GOOGLE_CAL_ID_COURSES,
-      summary: event.title,
-      description: JSON.stringify(event.content),
-      start: event.startDate,
-      end: event.endDate,
-      extendedProperties: {
-        private: event._key
-      }
-    }).then((res) => console.log(res))
+    const newEvent = await new Promise((resolve, reject) => {
+      calendar.events.insert({
+        auth: jwtClient,
+        calendarId: process.env.GOOGLE_CAL_ID_COURSES,
+        summary: event.title,
+        description: JSON.stringify(event.content),
+        start: event.startDate,
+        end: event.endDate,
+        extendedProperties: {
+          private: event._key
+        }
+      })
+    })
+    console.log(newEvent)
   }
 
   return {
