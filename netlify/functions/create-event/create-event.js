@@ -61,6 +61,13 @@ export const handler = async (event, context) => {
         extendedProperties: {
           private: event._key
         }
+      }, async (err, res) => {
+        if (err) {
+          console.log('The API returned an error: ' + err)
+          reject('The API returned an error: ' + err)
+          return
+        }
+        resolve(res.data)
       })
     })
     console.log(newEvent)
