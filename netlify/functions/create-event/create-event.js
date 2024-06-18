@@ -47,31 +47,32 @@ export const handler = async (event, context) => {
       resolve(coursesJSON)
     })
   })
+  console.log(eventBody)
 
-  for (let i = 0; i < dates.length; i++) {
-    const event = dates[i]
-    const newEvent = await new Promise((resolve, reject) => {
-      const eventData = auth: jwtClient,
-      calendarId: process.env.GOOGLE_CAL_ID_COURSES,
-      summary: event.title,
-      description: JSON.stringify(event.content),
-      start: event.startDate,
-      end: event.endDate,
-      extendedProperties: {
-        private: event._key
-      }
-      console.log(eventData)
-      calendar.events.insert(eventData, async (err, res) => {
-        if (err) {
-          console.log('The API returned an error: ' + err)
-          reject('The API returned an error: ' + err)
-          return
-        }
-        resolve(res.data)
-      })
-    })
-    console.log(newEvent)
-  }
+  // for (let i = 0; i < dates.length; i++) {
+  //   const event = dates[i]
+  //   const newEvent = await new Promise((resolve, reject) => {
+  //     const eventData = auth: jwtClient,
+  //     calendarId: process.env.GOOGLE_CAL_ID_COURSES,
+  //     summary: event.title,
+  //     description: JSON.stringify(event.content),
+  //     start: event.startDate,
+  //     end: event.endDate,
+  //     extendedProperties: {
+  //       private: event._key
+  //     }
+  //     console.log(eventData)
+  //     calendar.events.insert(eventData, async (err, res) => {
+  //       if (err) {
+  //         console.log('The API returned an error: ' + err)
+  //         reject('The API returned an error: ' + err)
+  //         return
+  //       }
+  //       resolve(res.data)
+  //     })
+  //   })
+  //   console.log(newEvent)
+  // }
 
   return {
     statusCode: 200,
