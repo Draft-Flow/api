@@ -55,22 +55,22 @@ export const handler = async (event, context) => {
       const eventData = {
         auth: jwtClient,
         calendarId: process.env.GOOGLE_CAL_ID_COURSES,
-        summary: event.title,
-        description: JSON.stringify(event.content),
+        summary: title,
+        description: JSON.stringify(content),
         start: event.startDate,
         end: event.endDate,
         extendedProperties: {
           private: event._key
         }
       }
-      console.log(eventData)
+
       calendar.events.insert(eventData, async (err, res) => {
         if (err) {
           console.log('The API returned an error: ' + err)
           reject('The API returned an error: ' + err)
           return
         }
-        resolve(res.data)
+        resolve('Success ' + res.data)
       })
     })
     console.log(newEvent)
