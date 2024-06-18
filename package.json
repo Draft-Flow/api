@@ -1,9 +1,9 @@
 {
+  "type": "module",
   "name": "draft-and-flow-api",
   "version": "1.0.0",
   "description": "Learn how to use serverless functions in less than 30 minutes!",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "netlify dev",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Draft-Flow/api#readme",
   "dependencies": {
+    "@netlify/functions": "^2.7.0",
     "netlify-cli": "^17.28.0"
   }
 }
