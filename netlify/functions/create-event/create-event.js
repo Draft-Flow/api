@@ -55,13 +55,19 @@ export const handler = async (event, context) => {
       const eventData = {
         auth: jwtClient,
         calendarId: process.env.GOOGLE_CAL_ID_COURSES,
-        summary: title,
-        description: JSON.stringify(content),
-        "start.dateTime": event.startDate,
-        "end.dateTime": event.endDate,
-        extendedProperties: {
-          private: {
-            key: event._key
+        resource: {
+          summary: title,
+          description: JSON.stringify(content),
+          start: {
+            dateTime: event.startDate
+          },
+          end: {
+            dateTime: event.endDate
+          },
+          extendedProperties: {
+            private: {
+              key: event._key
+            }
           }
         }
       }
