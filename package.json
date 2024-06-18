@@ -21,5 +21,8 @@
   "dependencies": {
     "@netlify/functions": "^2.7.0",
     "netlify-cli": "^17.28.0"
+  },
+  "devDependencies": {
+    "googleapis": "^140.0.0"
   }
 }
