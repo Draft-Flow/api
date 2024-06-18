@@ -48,12 +48,25 @@ export const handler = async (event, context) => {
     })
   })
 
-  console.log({calendarCourses})
+  for (let i = 0; i < dates.length; i++) {
+    const event = dates[i]
+    calendar.events.insert({
+      auth: jwtClient,
+      calendarId: process.env.GOOGLE_CAL_ID_COURSES,
+      summary: event.title,
+      description: event.content.join('\n'),
+      start: event.startDate,
+      end: event.endDate,
+      extendedProperties: {
+        private: event._key
+      }
+    }).then((res) => console.log(res))
+  }
 
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: 'Hello world!'
+      message: 'Success'
     })
   }
 }
