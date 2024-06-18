@@ -57,10 +57,16 @@ export const handler = async (event, context) => {
         calendarId: process.env.GOOGLE_CAL_ID_COURSES,
         summary: title,
         description: JSON.stringify(content),
-        start: event.startDate,
-        end: event.endDate,
+        start: {
+          dateTime: event.startDate
+        },
+        end: {
+          dateTime: event.endDate
+        },
         extendedProperties: {
-          private: event._key
+          private: {
+            key: event._key
+          }
         }
       }
 
