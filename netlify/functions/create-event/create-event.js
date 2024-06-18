@@ -51,17 +51,17 @@ export const handler = async (event, context) => {
   for (let i = 0; i < dates.length; i++) {
     const event = dates[i]
     const newEvent = await new Promise((resolve, reject) => {
-      calendar.events.insert({
-        auth: jwtClient,
-        calendarId: process.env.GOOGLE_CAL_ID_COURSES,
-        summary: event.title,
-        description: JSON.stringify(event.content),
-        start: event.startDate,
-        end: event.endDate,
-        extendedProperties: {
-          private: event._key
-        }
-      }, async (err, res) => {
+      const eventData = auth: jwtClient,
+      calendarId: process.env.GOOGLE_CAL_ID_COURSES,
+      summary: event.title,
+      description: JSON.stringify(event.content),
+      start: event.startDate,
+      end: event.endDate,
+      extendedProperties: {
+        private: event._key
+      }
+      console.log(eventData)
+      calendar.events.insert(eventData, async (err, res) => {
         if (err) {
           console.log('The API returned an error: ' + err)
           reject('The API returned an error: ' + err)
