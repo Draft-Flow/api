@@ -64,16 +64,16 @@ export const handler = async (event, context) => {
         }
       }
       console.log(eventData)
-      // calendar.events.insert(eventData, async (err, res) => {
-      //   if (err) {
-      //     console.log('The API returned an error: ' + err)
-      //     reject('The API returned an error: ' + err)
-      //     return
-      //   }
-      //   resolve(res.data)
-      // })
+      calendar.events.insert(eventData, async (err, res) => {
+        if (err) {
+          console.log('The API returned an error: ' + err)
+          reject('The API returned an error: ' + err)
+          return
+        }
+        resolve(res.data)
+      })
     })
-    //console.log(newEvent)
+    console.log(newEvent)
   }
 
   return {
