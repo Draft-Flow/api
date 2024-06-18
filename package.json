@@ -23,6 +23,7 @@
     "netlify-cli": "^17.28.0"
   },
   "devDependencies": {
+    "date-fns": "^3.6.0",
     "googleapis": "^140.0.0"
   }
 }
