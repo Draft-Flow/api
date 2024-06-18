@@ -70,6 +70,8 @@ export const handler = async (event, context) => {
         }
       }
 
+      console.log(eventData)
+
       calendar.events.insert(eventData, async (err, res) => {
         if (err) {
           console.log('The API returned an error: ' + err)
