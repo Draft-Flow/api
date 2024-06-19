@@ -50,6 +50,27 @@ export const handler = async (event, context) => {
     })
   })
 
+  // Delete any events that are no longer in the course
+  const eventsToDelete = calendarCourses.filter(course => course.extendedProperties?.shared?.['eventId'] === id && !dates.find(date => date._key === course.extendedProperties?.shared?.['key']))
+
+  for (let i = 0; i < eventsToDelete.length; i++) {
+    const event = eventsToDelete[i]
+    await new Promise((resolve, reject) => {
+      calendar.events.delete({
+        auth: jwtClient,
+        calendarId: process.env.GOOGLE_CAL_ID_COURSES,
+        eventId: event.id
+      }, async (err, res) => {
+        if (err) {
+          console.log('The API returned an error: ' + err)
+          reject('The API returned an error: ' + err)
+          return
+        }
+        resolve(res.data)
+      })
+    })
+  }
+
   // Only include upcoming dates
   const upcomingDates = dates.filter(date => new Date(date.startDate) > new Date())
 
