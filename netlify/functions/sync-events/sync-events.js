@@ -55,7 +55,7 @@ export const handler = async (event, context) => {
 
   for (let i = 0; i < eventsToDelete.length; i++) {
     const event = eventsToDelete[i]
-    await new Promise((resolve, reject) => {
+    const deletedEvent = await new Promise((resolve, reject) => {
       calendar.events.delete({
         auth: jwtClient,
         calendarId: process.env.GOOGLE_CAL_ID_COURSES,
@@ -69,6 +69,7 @@ export const handler = async (event, context) => {
         resolve(res.data)
       })
     })
+    console.log({deletedEvent})
   }
 
   // Only include upcoming dates
