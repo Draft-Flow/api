@@ -12,6 +12,7 @@ export const handler = async (event, context) => {
     null,
     privatekey.private_key,
     ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events']
+    "brett@draftandflow.com"
   )
   
   jwtClient.authorize(function (err, tokens) {
