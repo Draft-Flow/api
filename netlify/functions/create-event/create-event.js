@@ -1,6 +1,6 @@
 import fs from 'fs'
 import {google} from 'googleapis'
-import {formatISO, addMonths} from 'date-fns'
+import {formatISO, addMonths, intlFormat} from 'date-fns'
 const { toHTML } = require('@portabletext/to-html')
 
 export const handler = async (event, context) => {
@@ -64,10 +64,10 @@ export const handler = async (event, context) => {
           ${toHTML(content, {components: {}})}
         `,
         start: {
-          dateTime: event.startDate
+          dateTime: intlFormat(event.startDate)
         },
         end: {
-          dateTime: event.endDate
+          dateTime: intlFormat(event.endDate)
         },
         extendedProperties: {
           shared: {
