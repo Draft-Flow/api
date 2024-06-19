@@ -71,7 +71,8 @@ export const handler = async (event, context) => {
         },
         extendedProperties: {
           shared: {
-            key: event._key
+            key: event._key,
+            eventId: id
           }
         },
         attendees: [
