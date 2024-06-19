@@ -47,7 +47,7 @@ export const handler = async (event, context) => {
       resolve(coursesJSON)
     })
   })
-  console.log(calendarCourses)
+  //console.log(calendarCourses)
 
   for (let i = 0; i < dates.length; i++) {
     const event = dates[i]
@@ -71,7 +71,9 @@ export const handler = async (event, context) => {
       }
     }
 
-    const existingEvent = calendarCourses.find(course => course.extendedProperties.shared.key === event._key)   
+    calendarCourses.map(course => console.log(course.extendedProperties.shared))
+
+    const existingEvent = calendarCourses.find(course => course.extendedProperties.shared['key'] === event._key)   
     if (existingEvent){
       eventData.eventId = existingEvent.id
       calendar.events.update(eventData, async (err, res) => {
