@@ -71,7 +71,7 @@ export const handler = async (event, context) => {
       }
     }
 
-    calendarCourses.map(course => console.log(course.extendedProperties.shared?.['key']))
+    calendarCourses.map(course => console.log('key ', course.extendedProperties?.shared?.['key']))
 
     const existingEvent = calendarCourses.find(course => course.extendedProperties?.shared?.['key'] === event._key)   
     if (existingEvent){
