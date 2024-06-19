@@ -60,7 +60,7 @@ export const handler = async (event, context) => {
       calendarId: process.env.GOOGLE_CAL_ID_COURSES,
       resource: {
         summary: title,
-        description: `<p>-- DO NOT EDIT - IT WILL BE OVERWRITTEN -- </p>
+        description: `<p><strong>-- DO NOT EDIT - IT WILL BE OVERWRITTEN --</strong></p>
           ${toHTML(content, {components: {}})}
         `,
         start: {
