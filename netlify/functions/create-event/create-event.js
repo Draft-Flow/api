@@ -1,6 +1,6 @@
 import fs from 'fs'
 import {google} from 'googleapis'
-import {formatISO, addMonths, intlFormat} from 'date-fns'
+import {formatISO, addMonths} from 'date-fns'
 const { toHTML } = require('@portabletext/to-html')
 
 export const handler = async (event, context) => {
