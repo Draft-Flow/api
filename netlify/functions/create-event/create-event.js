@@ -71,18 +71,18 @@ export const handler = async (event, context) => {
       }
     }
 
-    // const existingEvent = calendarCourses.find(course => course.extendedProperties.private.key === event._key)   
-    // if (existingEvent){
-    //   eventData.eventId = existingEvent.id
-    //   calendar.events.update(eventData, async (err, res) => {
-    //     if (err) {
-    //       console.log('The API returned an error: ' + err)
-    //       reject('The API returned an error: ' + err)
-    //       return
-    //     }
-    //     resolve('Success ' + res.data)
-    //   })
-    // } else  {
+    const existingEvent = calendarCourses.find(course => course.extendedProperties.private.key === event._key)   
+    if (existingEvent){
+      eventData.eventId = existingEvent.id
+      calendar.events.update(eventData, async (err, res) => {
+        if (err) {
+          console.log('The API returned an error: ' + err)
+          reject('The API returned an error: ' + err)
+          return
+        }
+        resolve('Success ' + res.data)
+      })
+    } else  {
       const newEvent = await new Promise((resolve, reject) => {
         calendar.events.insert(eventData, async (err, res) => {
           if (err) {
@@ -93,7 +93,7 @@ export const handler = async (event, context) => {
           resolve('Success ' + res.data)
         })
       })
-   // }
+    }
   }
 
   return {
