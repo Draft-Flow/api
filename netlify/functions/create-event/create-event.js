@@ -11,7 +11,7 @@ export const handler = async (event, context) => {
     privatekey.client_email,
     null,
     privatekey.private_key,
-    ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events']
+    ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'],
     "brett@draftandflow.com"
   )
   
