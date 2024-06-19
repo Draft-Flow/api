@@ -1,6 +1,7 @@
 import fs from 'fs'
 import {google} from 'googleapis'
 import {formatISO, addMonths} from 'date-fns'
+const { toHTML } = require('@portabletext/to-html')
 
 export const handler = async (event, context) => {
   const eventBody = JSON.parse(event.body)
@@ -59,7 +60,9 @@ export const handler = async (event, context) => {
       calendarId: process.env.GOOGLE_CAL_ID_COURSES,
       resource: {
         summary: title,
-        description: `-- DO NOT EDIT - IT WILL BE OVERWRITTEN -- /n/n/n ${content[0].children.map(child => child.text).join('/n/n')}`,
+        description: `-- DO NOT EDIT - IT WILL BE OVERWRITTEN
+        
+        ${toHTML(content, {components: {}})}`,
         start: {
           dateTime: event.startDate
         },
