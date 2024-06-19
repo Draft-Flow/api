@@ -84,7 +84,8 @@ export const handler = async (event, context) => {
           reject('The API returned an error: ' + err)
           return
         }
-        resolve('Updated ' + res.data)
+        console.log('Event updated: ', res.data)
+        resolve(res.data)
       })
     // Else create a new event
     } else  {
@@ -95,7 +96,8 @@ export const handler = async (event, context) => {
             reject('The API returned an error: ' + err)
             return
           }
-          resolve('Created ' + res.data)
+          console.log('Event created: ', res.data)
+          resolve(res.data)
         })
       })
     }
