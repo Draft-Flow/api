@@ -50,7 +50,7 @@ export const handler = async (event, context) => {
 
   // Only include upcoming dates
   const upcomingDates = dates.filter(date => new Date(date.startDate) > new Date())
-  console.log({upcomingDates})
+
   for (let i = 0; i < upcomingDates.length; i++) {
     const event = upcomingDates[i]
     const eventData = {
@@ -74,7 +74,8 @@ export const handler = async (event, context) => {
     }
 
     // Check if the event already exists
-    const existingEvent = calendarCourses.find(course => course.extendedProperties?.shared?.['key'] === event._key) 
+    const existingEvent = calendarCourses.find(course => course.extendedProperties?.shared?.['key'] === event._key)
+    console.log({existingEvent}) 
 
      // If it exists, update the event 
     if (existingEvent){
