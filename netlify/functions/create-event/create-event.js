@@ -33,7 +33,7 @@ export const handler = async (event, context) => {
       timeMin: formatISO(new Date()),
       timeMax: formatISO(addMonths(new Date(), 12)),
       showDeleted: false,
-      maxResults: 200,
+      maxResults: 1000,
       singleEvents: true,
       orderBy: 'startTime',
     }, async (err, res) => {
