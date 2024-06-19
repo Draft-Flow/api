@@ -51,30 +51,30 @@ export const handler = async (event, context) => {
 
   for (let i = 0; i < dates.length; i++) {
     const event = dates[i]
-    const newEvent = await new Promise((resolve, reject) => {
-      const eventData = {
-        auth: jwtClient,
-        calendarId: process.env.GOOGLE_CAL_ID_COURSES,
-        resource: {
-          summary: title,
-          description: JSON.stringify(content),
-          start: {
-            dateTime: event.startDate
-          },
-          end: {
-            dateTime: event.endDate
-          },
-          extendedProperties: {
-            private: {
-              key: event._key
-            }
+    const eventData = {
+      auth: jwtClient,
+      calendarId: process.env.GOOGLE_CAL_ID_COURSES,
+      resource: {
+        summary: title,
+        description: JSON.stringify(content),
+        start: {
+          dateTime: event.startDate
+        },
+        end: {
+          dateTime: event.endDate
+        },
+        extendedProperties: {
+          private: {
+            key: event._key
           }
         }
       }
+    }
 
-      console.log(eventData)
-
-      calendar.events.insert(eventData, async (err, res) => {
+    const existingEvent = calendarCourses.find(course => course.extendedProperties.private.key === event._key)   
+    if (existingEvent){
+      eventData.eventId = existingEvent.id
+      calendar.events.update(eventData, async (err, res) => {
         if (err) {
           console.log('The API returned an error: ' + err)
           reject('The API returned an error: ' + err)
@@ -82,8 +82,18 @@ export const handler = async (event, context) => {
         }
         resolve('Success ' + res.data)
       })
-    })
-    console.log(newEvent)
+    } else  {
+      const newEvent = await new Promise((resolve, reject) => {
+        calendar.events.insert(eventData, async (err, res) => {
+          if (err) {
+            console.log('The API returned an error: ' + err)
+            reject('The API returned an error: ' + err)
+            return
+          }
+          resolve('Success ' + res.data)
+        })
+      })
+    }
   }
 
   return {
