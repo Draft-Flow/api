@@ -80,15 +80,17 @@ export const handler = async (event, context) => {
      // If it exists, update the event 
     if (existingEvent){
       eventData.eventId = existingEvent.id
-      calendar.events.update(eventData, async (err, res) => {
-        if (err) {
-          console.log('The API returned an error: ' + err)
-          reject('The API returned an error: ' + err)
-          return
-        }
-        console.log('Event updated: ', res.data)
-        resolve(res.data)
+      const updatedEvent = await new Promise((resolve, reject) => {
+        calendar.events.update(eventData, async (err, res) => {
+          if (err) {
+            console.log('The API returned an error: ' + err)
+            reject('The API returned an error: ' + err)
+            return
+          }
+          resolve(res.data)
+        })
       })
+      console.log({updatedEvent})
     // Else create a new event
     } else  {
       const newEvent = await new Promise((resolve, reject) => {
@@ -98,10 +100,10 @@ export const handler = async (event, context) => {
             reject('The API returned an error: ' + err)
             return
           }
-          console.log('Event created: ', res.data)
           resolve(res.data)
         })
       })
+      console.log({newEvent})
     }
   }
 
