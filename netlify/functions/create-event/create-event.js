@@ -47,10 +47,11 @@ export const handler = async (event, context) => {
       resolve(coursesJSON)
     })
   })
-  //console.log(calendarCourses)
 
-  for (let i = 0; i < dates.length; i++) {
-    const event = dates[i]
+  // Only include upcoming dates
+  const upcomingDates = dates.filter(date => new Date(date.startDate) > new Date())
+  for (let i = 0; i < upcomingDates.length; i++) {
+    const event = upcomingDates[i]
     const eventData = {
       auth: jwtClient,
       calendarId: process.env.GOOGLE_CAL_ID_COURSES,
@@ -71,9 +72,10 @@ export const handler = async (event, context) => {
       }
     }
 
-    calendarCourses.map(course => console.log('key ', course.extendedProperties?.shared?.['key']))
+    // Check if the event already exists
+    const existingEvent = calendarCourses.find(course => course.extendedProperties?.shared?.['key'] === event._key) 
 
-    const existingEvent = calendarCourses.find(course => course.extendedProperties?.shared?.['key'] === event._key)   
+     // If it exists, update the event 
     if (existingEvent){
       eventData.eventId = existingEvent.id
       calendar.events.update(eventData, async (err, res) => {
@@ -82,8 +84,9 @@ export const handler = async (event, context) => {
           reject('The API returned an error: ' + err)
           return
         }
-        resolve('Success ' + res.data)
+        resolve('Updated ' + res.data)
       })
+    // Else create a new event
     } else  {
       const newEvent = await new Promise((resolve, reject) => {
         calendar.events.insert(eventData, async (err, res) => {
@@ -92,7 +95,7 @@ export const handler = async (event, context) => {
             reject('The API returned an error: ' + err)
             return
           }
-          resolve('Success ' + res.data)
+          resolve('Created ' + res.data)
         })
       })
     }
