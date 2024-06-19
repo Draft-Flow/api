@@ -69,15 +69,23 @@ export const handler = async (event, context) => {
           shared: {
             key: event._key
           }
-        }
+        },
+        attendees: [
+          {
+           email: "c_188a0b94t52lgg48ka6b7p78nf5r6@resource.calendar.google.com",
+          },
+          {
+           email: "c_188ecr8dc2eaag2ejegq5htrgba80@resource.calendar.google.com",
+           resource: true,
+          }
+        ],
       }
     }
 
     // Check if the event already exists
     const existingEvent = calendarCourses.find(course => course.extendedProperties?.shared?.['key'] === event._key)
-    console.log({existingEvent}) 
 
-     // If it exists, update the event 
+     // If it exists, update the event
     if (existingEvent){
       eventData.eventId = existingEvent.id
       const updatedEvent = await new Promise((resolve, reject) => {
