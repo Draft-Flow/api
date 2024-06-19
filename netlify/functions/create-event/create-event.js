@@ -47,7 +47,7 @@ export const handler = async (event, context) => {
       resolve(coursesJSON)
     })
   })
-  console.log(eventBody)
+  console.log(calendarCourses)
 
   for (let i = 0; i < dates.length; i++) {
     const event = dates[i]
