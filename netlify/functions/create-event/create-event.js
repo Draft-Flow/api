@@ -50,6 +50,7 @@ export const handler = async (event, context) => {
 
   // Only include upcoming dates
   const upcomingDates = dates.filter(date => new Date(date.startDate) > new Date())
+  console.log({upcomingDates})
   for (let i = 0; i < upcomingDates.length; i++) {
     const event = upcomingDates[i]
     const eventData = {
