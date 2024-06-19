@@ -52,6 +52,7 @@ export const handler = async (event, context) => {
 
   // Delete any events that are no longer in the course
   const eventsToDelete = calendarCourses.filter(course => course.extendedProperties?.shared?.['eventId'] === id && !dates.find(date => date._key === course.extendedProperties?.shared?.['key']))
+  console.log({eventsToDelete})
 
   for (let i = 0; i < eventsToDelete.length; i++) {
     const event = eventsToDelete[i]
