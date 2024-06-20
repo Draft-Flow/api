@@ -27,7 +27,7 @@ export const handler = async (event, context, callback) => {
       line_items: [
         {
           price_data: {
-            currency: 'gpb',
+            currency: 'gbp',
             product_data: {
               name: 'Course',
             },
@@ -60,7 +60,7 @@ export const handler = async (event, context, callback) => {
     }
   } catch (error) {
     console.log({error})
-    
+
     return {
       statusCode: 400,
       body: JSON.stringify(error)
