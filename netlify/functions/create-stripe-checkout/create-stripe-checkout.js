@@ -1,5 +1,4 @@
-import Stripe from ('stripe')
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+// import Stripe from ('stripe')
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -10,7 +9,6 @@ const CORS_HEADERS = {
 
 export const handler = async (event, context, callback) => {
   if (event.httpMethod === 'OPTIONS') {
-    console.log('OPTIONS ', { CORS_HEADERS });
     return {
       statusCode: 200,
       headers: CORS_HEADERS,
@@ -18,6 +16,8 @@ export const handler = async (event, context, callback) => {
     };
   }
 
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+  // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
   const data = JSON.parse(event.body)
   
   try {
