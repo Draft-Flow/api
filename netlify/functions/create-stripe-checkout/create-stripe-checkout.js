@@ -51,6 +51,8 @@ export const handler = async (event, context, callback) => {
         allowed_countries: ['GB'],
       }
     })
+
+    console.log({session})
   
     return {
       statusCode: 200,
