@@ -2,7 +2,23 @@
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 import {google} from 'googleapis'
 
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+}
+
 export const handler = async (event, context, callback) => {
+  if (event.httpMethod === 'OPTIONS') {
+    console.log('OPTIONS ', { CORS_HEADERS });
+    return {
+      statusCode: 200,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ message: 'Successful preflight call.' }),
+    };
+  }
+
   const data = JSON.parse(event.body)
   
   // try {
@@ -37,12 +53,7 @@ export const handler = async (event, context, callback) => {
   //   })
   
     return {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      },
+      headers: CORS_HEADERS,
       statusCode: 200,
       // body: JSON.stringify(session)
       body: JSON.stringify('session')
