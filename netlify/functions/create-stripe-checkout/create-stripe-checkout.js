@@ -56,6 +56,7 @@ export const handler = async (event, context, callback) => {
   
     return {
       statusCode: 200,
+      headers: CORS_HEADERS,
       body: JSON.stringify(session)
     }
   } catch (error) {
