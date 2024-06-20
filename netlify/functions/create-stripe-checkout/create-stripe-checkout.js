@@ -1,5 +1,6 @@
-import Stripe from ('stripe')
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+// import Stripe from ('stripe')
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+import {google} from 'googleapis'
 
 export const handler = async (event, context, callback) => {
   const data = JSON.parse(event.body)
