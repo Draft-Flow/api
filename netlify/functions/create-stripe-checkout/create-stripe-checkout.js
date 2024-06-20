@@ -1,5 +1,3 @@
-const sanity = require('../../../client/sanity/sanity')
-
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type',
@@ -19,6 +17,7 @@ export const handler = async (event, context, callback) => {
 
   
   try {
+    const sanity = require('../../../client/sanity/sanity')
     const data = JSON.parse(event.body)
     const {courseid: courseID, coursedate: courseDate} = data
 
