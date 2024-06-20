@@ -1,3 +1,5 @@
+const sanity = require('../../../client/sanity/sanity')
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type',
@@ -15,8 +17,22 @@ export const handler = async (event, context, callback) => {
     }
   }
 
-  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
   const data = JSON.parse(event.body)
+  const {courseid: courseID, coursedate: courseDate} = data
+
+  const filter = groq`*[_type == "events" && _id == "${courseID}"]`
+  const projection = groq`{
+    "id": "_id",
+    title,
+    price
+  }`
+  const query = [filter, projection].join(' ')
+  const courseData = await sanity.fetch(query).catch((err) => {
+    console.error(err)
+  })
+
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
   
   try {
     const session = await stripe.checkout.sessions.create({
@@ -26,10 +42,12 @@ export const handler = async (event, context, callback) => {
           price_data: {
             currency: 'gbp',
             product_data: {
-              name: `Course - ${data.date}`,
+              name: `${courseData.title} - ${data.date}`,
+              description: 
             },
-            unit_amount: 2000,
+            unit_amount: courseData.price * 100,
             tax_behavior: 'inclusive',
+            tax_code: 'txcd_20060044'
           },
           adjustable_quantity: {
             enabled: true,
@@ -47,7 +65,10 @@ export const handler = async (event, context, callback) => {
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['GB'],
-      }
+      },
+      phone_number_collection: {
+        enabled: true,
+      },
     })
   
     return {

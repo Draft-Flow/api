@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@portabletext/to-html": "^2.0.13",
+    "@sanity/client": "^6.20.1",
     "date-fns": "^3.6.0",
     "googleapis": "^140.0.0",
     "stripe": "^15.12.0"
