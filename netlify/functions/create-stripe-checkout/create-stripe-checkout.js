@@ -4,8 +4,6 @@ export const handler = async (event, context, callback) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
   const data = JSON.parse(event.body)
 
-  
-  
   if (event.httpMethod === 'OPTIONS') {
       const headers = {
         'Access-Control-Allow-Origin': '*',
