@@ -17,24 +17,24 @@ export const handler = async (event, context, callback) => {
     }
   }
 
-  const data = JSON.parse(event.body)
-  const {courseid: courseID, coursedate: courseDate} = data
-
-  const filter = groq`*[_type == "events" && _id == "${courseID}"]`
-  const projection = groq`{
-    "id": "_id",
-    title,
-    price
-  }`
-  const query = [filter, projection].join(' ')
-  const courseData = await sanity.fetch(query).catch((err) => {
-    console.error(err)
-  })
-
-  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-
   
   try {
+    const data = JSON.parse(event.body)
+    const {courseid: courseID, coursedate: courseDate} = data
+
+    const filter = groq`*[_type == "events" && _id == "${courseID}"]`
+    const projection = groq`{
+      "id": "_id",
+      title,
+      price
+    }`
+    const query = [filter, projection].join(' ')
+    const courseData = await sanity.fetch(query).catch((err) => {
+      console.error(err)
+    })
+
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [
@@ -42,7 +42,7 @@ export const handler = async (event, context, callback) => {
           price_data: {
             currency: 'gbp',
             product_data: {
-              name: `${courseData.title} - ${data.date}`,
+              name: `${courseData.title} - ${courseDate}`,
               description: 
             },
             unit_amount: courseData.price * 100,
