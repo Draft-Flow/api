@@ -7,7 +7,19 @@ export const handler = async function(event, context, callback) {
       mode: 'payment',
       line_items: [
         {
-          price: 1000,
+          price_data: {
+            currency: 'gpb',
+            product_data: {
+              name: 'Course',
+            },
+            unit_amount: 2000,
+            tax_behavior: 'inclusive',
+          },
+          adjustable_quantity: {
+            enabled: true,
+            minimum: 1,
+            maximum: 10,
+          },
           quantity: 1,
         },
       ],
