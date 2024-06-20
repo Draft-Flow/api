@@ -1,5 +1,8 @@
+import Stripe from ('stripe')
+const stripe = new Stripe((process.env.STRIPE_SECRET_KEY))
+
 export const handler = async function(event, context, callback) {
-  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+  
   const data = JSON.parse(event.body)
   
   try {
