@@ -27,7 +27,6 @@ export const handler = async (event, context, callback) => {
               name: 'Course',
             },
             unit_amount: 2000,
-            tax_behavior: 'inclusive',
           },
           adjustable_quantity: {
             enabled: true,
