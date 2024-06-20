@@ -1,5 +1,3 @@
-// import Stripe from ('stripe')
-
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type',
@@ -8,18 +6,17 @@ const CORS_HEADERS = {
 }
 
 export const handler = async (event, context, callback) => {
+  // Handle preflight request
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
       headers: CORS_HEADERS,
       body: JSON.stringify({ message: 'Successful preflight call.' }),
-    };
+    }
   }
 
   const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-  // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
   const data = JSON.parse(event.body)
-  console.log({stripe, data})
   
   try {
     const session = await stripe.checkout.sessions.create({
@@ -29,9 +26,10 @@ export const handler = async (event, context, callback) => {
           price_data: {
             currency: 'gbp',
             product_data: {
-              name: 'Course',
+              name: `Course - ${data.date}`,
             },
             unit_amount: 2000,
+            tax_behavior: 'inclusive',
           },
           adjustable_quantity: {
             enabled: true,
@@ -51,8 +49,6 @@ export const handler = async (event, context, callback) => {
         allowed_countries: ['GB'],
       }
     })
-
-    console.log({session})
   
     return {
       statusCode: 200,
