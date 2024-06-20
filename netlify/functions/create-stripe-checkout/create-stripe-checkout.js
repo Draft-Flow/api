@@ -59,6 +59,8 @@ export const handler = async (event, context, callback) => {
       body: JSON.stringify(session)
     }
   } catch (error) {
+    console.log({error})
+    
     return {
       statusCode: 400,
       body: JSON.stringify(error)
