@@ -36,12 +36,13 @@ export const handler = async (event, context, callback) => {
   //   })
   
     return {
-      statusCode: 200,
       headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, POST, OPTION",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
       },
+      statusCode: 200,
       // body: JSON.stringify(session)
       body: JSON.stringify('session')
     }
