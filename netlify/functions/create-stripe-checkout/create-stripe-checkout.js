@@ -19,6 +19,7 @@ export const handler = async (event, context, callback) => {
   const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
   // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
   const data = JSON.parse(event.body)
+  console.log({stripe, data})
   
   try {
     const session = await stripe.checkout.sessions.create({
@@ -52,7 +53,6 @@ export const handler = async (event, context, callback) => {
     })
   
     return {
-      headers: CORS_HEADERS,
       statusCode: 200,
       body: JSON.stringify(session)
     }
