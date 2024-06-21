@@ -47,8 +47,7 @@ export const handler = async (event, context, callback) => {
               description: 'description'
             },
             unit_amount: courseData.price * 100,
-            tax_behavior: 'inclusive',
-            tax_code: 'txcd_20060044'
+            tax_behavior: 'inclusive'
           },
           adjustable_quantity: {
             enabled: true,
