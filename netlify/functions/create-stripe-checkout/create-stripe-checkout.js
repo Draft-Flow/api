@@ -21,7 +21,7 @@ export const handler = async (event, context, callback) => {
     const data = JSON.parse(event.body)
     const {courseID, courseDate} = data
 
-    console.log({sanity})
+    console.log({sanityClient})
 
     const filter = groq`*[_type == "events" && _id == "${courseID}"]`
     const projection = groq`{
