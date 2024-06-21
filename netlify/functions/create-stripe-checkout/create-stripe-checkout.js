@@ -38,6 +38,9 @@ export const handler = async (event, context, callback) => {
 
     const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
+    const unitAmount = Number(courseData.price) * 100
+    console.log({unitAmount})
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [
@@ -48,7 +51,7 @@ export const handler = async (event, context, callback) => {
               name: `${courseData.title} - ${courseDate}`,
               description: 'description'
             },
-            unit_amount: courseData.price * 100,
+            unit_amount: unitAmount,
             tax_behavior: 'inclusive'
           },
           adjustable_quantity: {
