@@ -62,8 +62,8 @@ export const handler = async (event, context, callback) => {
       automatic_tax: {
         enabled: true,
       },
-      success_url: `${process.env.URL}/course-confirmed?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: process.env.URL,
+      success_url: `${event.headers.referer}/course-confirmed?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: event.headers.referer,
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['GB'],
