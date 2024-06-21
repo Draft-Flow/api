@@ -21,7 +21,7 @@ export const handler = async (event, context, callback) => {
     const data = JSON.parse(event.body)
     const {courseID, courseDate, page} = data
 
-    console.log({courseID, courseDate})
+    console.log({courseID, courseDate, page})
 
     const filter = groq`*[_type == "events" && _id == "${courseID}"][0]`
     const projection = groq`{
@@ -62,8 +62,8 @@ export const handler = async (event, context, callback) => {
       automatic_tax: {
         enabled: true,
       },
-      success_url: `${event.headers.referer}/${page}/course-confirmed?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${event.headers.referer}/${page},
+      success_url: `${event.headers.referer}/${page}/confirmed?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${event.headers.referer}/${page}`,
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['GB'],
