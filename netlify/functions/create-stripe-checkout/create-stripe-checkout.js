@@ -6,7 +6,6 @@ const CORS_HEADERS = {
 }
 
 export const handler = async (event, context, callback) => {
-  console.log({event})
   // Handle preflight request
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -20,7 +19,7 @@ export const handler = async (event, context, callback) => {
     const groq = require('groq')
     const {sanityClient} = require('../../../clients/sanity/sanity')
     const data = JSON.parse(event.body)
-    const {courseID, courseDate} = data
+    const {courseID, courseDate, page} = data
 
     console.log({courseID, courseDate})
 
@@ -63,8 +62,8 @@ export const handler = async (event, context, callback) => {
       automatic_tax: {
         enabled: true,
       },
-      success_url: `${event.headers.referer}/course-confirmed?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: event.headers.referer,
+      success_url: `${page}/course-confirmed?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: page,
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['GB'],
