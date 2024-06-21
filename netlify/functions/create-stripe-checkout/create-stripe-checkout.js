@@ -23,7 +23,7 @@ export const handler = async (event, context, callback) => {
 
     console.log({courseID, courseDate})
 
-    const filter = groq`*[_type == "events" && _id == "${courseID}"]`
+    const filter = groq`*[_type == "events" && _id == "${courseID}"][0]`
     const projection = groq`{
       "id": "_id",
       title,
@@ -34,12 +34,9 @@ export const handler = async (event, context, callback) => {
       console.error(err)
     })
 
-    console.log({courseData})
-
     const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
     const unitAmount = Number(courseData.price) * 100
-    console.log({unitAmount})
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
