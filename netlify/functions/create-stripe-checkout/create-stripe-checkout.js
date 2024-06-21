@@ -6,6 +6,7 @@ const CORS_HEADERS = {
 }
 
 export const handler = async (event, context, callback) => {
+  console.log({event})
   // Handle preflight request
   if (event.httpMethod === 'OPTIONS') {
     return {
