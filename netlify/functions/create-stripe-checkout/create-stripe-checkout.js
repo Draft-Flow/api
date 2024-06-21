@@ -17,7 +17,7 @@ export const handler = async (event, context, callback) => {
   
   try {
     const groq = require('groq')
-    const sanity = require('../../../client/sanity/sanity')
+    const sanity = require('../../../clients/sanity/sanity')
     const data = JSON.parse(event.body)
     const {courseID, courseDate} = data
 
