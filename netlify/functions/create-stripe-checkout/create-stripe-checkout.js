@@ -14,7 +14,6 @@ export const handler = async (event, context, callback) => {
       body: JSON.stringify({ message: 'Successful preflight call.' }),
     }
   }
-
   
   try {
     const groq = require('groq')
@@ -43,7 +42,7 @@ export const handler = async (event, context, callback) => {
             currency: 'gbp',
             product_data: {
               name: `${courseData.title} - ${courseDate}`,
-              description: 
+              description: 'description'
             },
             unit_amount: courseData.price * 100,
             tax_behavior: 'inclusive',
