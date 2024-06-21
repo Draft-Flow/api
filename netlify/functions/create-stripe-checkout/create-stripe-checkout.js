@@ -17,7 +17,7 @@ export const handler = async (event, context, callback) => {
   
   try {
     const groq = require('groq')
-    const sanity = require('../../../clients/sanity/sanity')
+    const {sanityClient} = require('../../../clients/sanity/sanity')
     const data = JSON.parse(event.body)
     const {courseID, courseDate} = data
 
@@ -30,7 +30,7 @@ export const handler = async (event, context, callback) => {
       price
     }`
     const query = [filter, projection].join(' ')
-    const courseData = await sanity.fetch(query).catch((err) => {
+    const courseData = await sanityClient.fetch(query).catch((err) => {
       console.error(err)
     })
 
