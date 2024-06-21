@@ -34,6 +34,8 @@ export const handler = async (event, context, callback) => {
       console.error(err)
     })
 
+    console.log({courseData})
+
     const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
     const session = await stripe.checkout.sessions.create({
