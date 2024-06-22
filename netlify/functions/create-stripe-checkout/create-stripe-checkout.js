@@ -26,7 +26,8 @@ export const handler = async (event, context, callback) => {
     const projection = groq`{
       "id": "_id",
       title,
-      price
+      price,
+      content
     }`
     const query = [filter, projection].join(' ')
     const courseData = await sanityClient.fetch(query).catch((err) => {
