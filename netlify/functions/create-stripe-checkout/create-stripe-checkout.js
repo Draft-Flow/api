@@ -17,11 +17,10 @@ export const handler = async (event, context, callback) => {
   
   try {
     const groq = require('groq')
+    const { toHTML } = require('@portabletext/to-html')
     const {sanityClient} = require('../../../clients/sanity/sanity')
     const data = JSON.parse(event.body)
     const {courseID, courseDate, page} = data
-
-    console.log({courseID, courseDate, page})
 
     const filter = groq`*[_type == "events" && _id == "${courseID}"][0]`
     const projection = groq`{
@@ -46,7 +45,7 @@ export const handler = async (event, context, callback) => {
             currency: 'gbp',
             product_data: {
               name: `${courseData.title} - ${courseDate}`,
-              description: 'description'
+              description: toHTML(ourseData.content, { components: {} }) : '', 
             },
             unit_amount: unitAmount,
             tax_behavior: 'inclusive'
