@@ -45,7 +45,7 @@ export const handler = async (event, context, callback) => {
             currency: 'gbp',
             product_data: {
               name: `${courseData.title} - ${courseDate}`,
-              description: toHTML(ourseData.content, { components: {} }) : '', 
+              description: toHTML(ourseData.content, { components: {} }), 
             },
             unit_amount: unitAmount,
             tax_behavior: 'inclusive'
