@@ -17,7 +17,6 @@ export const handler = async (event, context, callback) => {
   
   try {
     const groq = require('groq')
-    const { toHTML } = require('@portabletext/to-html')
     const {sanityClient} = require('../../../clients/sanity/sanity')
     const data = JSON.parse(event.body)
     const {courseID, courseDate, page} = data
@@ -27,7 +26,7 @@ export const handler = async (event, context, callback) => {
       "id": "_id",
       title,
       price,
-      content
+      intro
     }`
     const query = [filter, projection].join(' ')
     const courseData = await sanityClient.fetch(query).catch((err) => {
@@ -46,7 +45,7 @@ export const handler = async (event, context, callback) => {
             currency: 'gbp',
             product_data: {
               name: `${courseData.title} - ${courseDate}`,
-              description: toHTML(courseData.content, { components: {} }), 
+              description: courseData.intro, 
             },
             unit_amount: unitAmount,
             tax_behavior: 'inclusive'
@@ -59,6 +58,9 @@ export const handler = async (event, context, callback) => {
           quantity: 1,
         },
       ],
+      consent_collection: {
+        promotions: 'auto'
+      },
       automatic_tax: {
         enabled: true,
       },
