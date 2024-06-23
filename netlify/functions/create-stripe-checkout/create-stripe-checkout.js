@@ -58,9 +58,6 @@ export const handler = async (event, context, callback) => {
           quantity: 1,
         },
       ],
-      consent_collection: {
-        promotions: 'auto'
-      },
       automatic_tax: {
         enabled: true,
       },
