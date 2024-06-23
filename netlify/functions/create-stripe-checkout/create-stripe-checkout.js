@@ -58,6 +58,7 @@ export const handler = async (event, context, callback) => {
           quantity: 1,
         },
       ],
+      allow_promotion_codes: true,
       automatic_tax: {
         enabled: true,
       },
