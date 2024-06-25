@@ -1,6 +1,6 @@
 import fs from 'fs'
 import {google} from 'googleapis'
-import {formatISO, addDays, addMonths} from 'date-fns'
+import {format, formatISO, addDays, addMonths} from 'date-fns'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
