@@ -47,8 +47,10 @@ export const handler = async (event, context) => {
   const timeSlots = []
   for (let i = 1; i < 90; i++) {
     const date = addDays(new Date(), i)
+    // Create morning and afternoon time slots
     const morningStartTime = `${format(date, "yyyy-MM-dd")}T09:00:00`
     const morningEndTime = `${format(date, "yyyy-MM-dd")}T13:00:00`
+    // Create afternoon time slots
     const afternoonStartTime = `${format(date, "yyyy-MM-dd")}T14:00:00`
     const afternoonEndTime = `${format(date, "yyyy-MM-dd")}T18:00:00`
     timeSlots.push({
@@ -82,8 +84,17 @@ export const handler = async (event, context) => {
       resolve(bikeRentals)
     })
   })
-  
 
+  // Remove time slots that are already booked
+  for (let i = 0; i < bikeRentals.length; i++) {
+    const bikeRental = bikeRentals[i]
+    const bikeRentalStart = bikeRental.start.dateTime
+    const bikeRentalEnd = bikeRental.end.dateTime
+    timeSlots = timeSlots.filter(timeSlot => {
+      return (timeSlot.start < bikeRentalStart && timeSlot.end < bikeRentalStart) || (timeSlot.start > bikeRentalEnd && timeSlot.end > bikeRentalEnd)
+    })
+  }
+  
   return {
     statusCode: 200,
     headers: CORS_HEADERS,
