@@ -1,6 +1,6 @@
 import fs from 'fs'
 import {google} from 'googleapis'
-import {formatISO, addMonths} from 'date-fns'
+import {formatISO, addDays, addMonths} from 'date-fns'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -8,7 +8,6 @@ const CORS_HEADERS = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 }
-
 
 export const handler = async (event, context) => {
   // Handle preflight request
@@ -22,7 +21,7 @@ export const handler = async (event, context) => {
 
   const eventBody = JSON.parse(event.body)
   const {calendarID} = eventBody
-  console.log({calendarID})
+
   const privatekey = JSON.parse(process.env.GOOGLE_KEY_FILE)
   const jwtClient = new google.auth.JWT(
     privatekey.client_email,
@@ -43,6 +42,24 @@ export const handler = async (event, context) => {
   )
 
   const calendar = google.calendar('v3')
+
+  // Create daily time slots
+  const timeSlots = []
+  for (let i = 1; i < 90; i++) {
+    const date = addDays(new Date(), i)
+    const morningStartTime = `${format(date, "yyyy-MM-dd")}T09:00:00`
+    const morningEndTime = `${format(date, "yyyy-MM-dd")}T13:00:00`
+    const afternoonStartTime = `${format(date, "yyyy-MM-dd")}T14:00:00`
+    const afternoonEndTime = `${format(date, "yyyy-MM-dd")}T18:00:00`
+    timeSlots.push({
+      start: morningStartTime,
+      end: morningEndTime
+    },
+    {
+      start: afternoonStartTime,
+      end: afternoonEndTime
+    })
+  }
 
   const bikeRentals = await new Promise((resolve, reject) => {
     calendar.events.list({
@@ -70,6 +87,6 @@ export const handler = async (event, context) => {
   return {
     statusCode: 200,
     headers: CORS_HEADERS,
-    body: JSON.stringify(bikeRentals)
+    body: JSON.stringify({bikeRentals, timeSlots})
   }
 }
