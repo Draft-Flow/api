@@ -92,9 +92,7 @@ export const handler = async (event, context) => {
     const bikeRentalEnd = bikeRental.end.dateTime
 
     timeSlots = timeSlots.filter(timeSlot => {
-      console.log({timeSlot, bikeRentalStart, bikeRentalEnd})
-      return true
-      // return (timeSlot.start < bikeRentalStart && timeSlot.end < bikeRentalStart) || (timeSlot.start > bikeRentalEnd && timeSlot.end > bikeRentalEnd)
+      return (timeSlot.start < bikeRentalStart && timeSlot.end < bikeRentalStart) || (timeSlot.start > bikeRentalEnd && timeSlot.end > bikeRentalEnd)
     })
   }
   
