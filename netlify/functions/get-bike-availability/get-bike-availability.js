@@ -44,7 +44,7 @@ export const handler = async (event, context) => {
   const calendar = google.calendar('v3')
 
   // Create daily time slots
-  const timeSlots = []
+  let timeSlots = []
   for (let i = 1; i < 90; i++) {
     const date = addDays(new Date(), i)
     // Create morning and afternoon time slots
