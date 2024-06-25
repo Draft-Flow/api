@@ -1,6 +1,6 @@
 import fs from 'fs'
 import {google} from 'googleapis'
-import {format, formatISO, addDays, addMonths} from 'date-fns'
+import {isBefore, isAfter, format, formatISO, addDays, addMonths} from 'date-fns'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -88,11 +88,16 @@ export const handler = async (event, context) => {
   // Remove time slots that are already booked
   for (let i = 0; i < bikeRentals.length; i++) {
     const bikeRental = bikeRentals[i]
-    const bikeRentalStart = bikeRental.start.dateTime
-    const bikeRentalEnd = bikeRental.end.dateTime
+    const bikeRentalStart = new Date(bikeRental.start.dateTime)
+    const bikeRentalEnd = new Date(bikeRental.end.dateTime)
 
-    timeSlots = timeSlots.filter(timeSlot => {
-      return (timeSlot.start <= bikeRentalStart && timeSlot.end <= bikeRentalStart) || (timeSlot.start >= bikeRentalEnd && timeSlot.end >= bikeRentalEnd)
+    timeSlots = timeSlots.filter(({
+      start,
+      end
+    }) => {
+      const timeSlotStart = new Date(start)
+      const timeSlotEnd = new Date(end)
+      return (isBefore(timeSlotStart, bikeRentalEnd) && isBefore(timeSlotEnd <= bikeRentalStart)) || (isAfter(timeSlotEnd, bikeRentalEnd) && isAfter(timeSlotEnd, bikeRentalEnd))
     })
   }
   
