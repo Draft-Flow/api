@@ -97,7 +97,7 @@ export const handler = async (event, context) => {
     }) => {
       const timeSlotStart = new Date(start)
       const timeSlotEnd = new Date(end)
-      return (isBefore(timeSlotStart, bikeRentalEnd) && isBefore(timeSlotEnd <= bikeRentalStart)) || (isAfter(timeSlotStart, bikeRentalEnd) && isAfter(timeSlotEnd, bikeRentalEnd))
+      return (isBefore(timeSlotStart, bikeRentalStart) && isBefore(timeSlotEnd, bikeRentalStart)) || (isAfter(timeSlotStart, bikeRentalEnd) && isAfter(timeSlotEnd, bikeRentalEnd))
     })
   }
   
