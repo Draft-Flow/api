@@ -29,6 +29,9 @@ export const handler = async (event, context, callback) => {
           quantity: selectedTimes.length,
         },
       ],
+      metadata: {
+        selectedTimes: JSON.stringify(selectedTimes),
+      },
       allow_promotion_codes: true,
       automatic_tax: {
         enabled: true,
