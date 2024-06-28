@@ -27,9 +27,12 @@ export const handler = async (event, context, callback) => {
       mode: 'payment',
       line_items: selectedTimes.map(timeSlot => (
         {
-          price: 'price_1PWRGmGzWQ51ogSj1OO610PE',
           quantity: 1,
           product_data: {
+            unit_amount: 1500,
+            currency: 'gbp',
+            product: 'prod_QNBe7Yrb9D1Jh9',
+            name: 'Bike Hire',
             description: format(new Date(timeSlot), 'Pp')
           }
         }
