@@ -28,12 +28,15 @@ export const handler = async (event, context, callback) => {
       line_items: selectedTimes.map(timeSlot => (
         {
           quantity: 1,
-          product_data: {
+          price_data: {
+            tax_behavior: 'inclusive',
             unit_amount: 1500,
-            currency: 'gbp',
-            product: 'prod_QNBe7Yrb9D1Jh9',
-            name: 'Bike Hire',
-            description: format(new Date(timeSlot), 'Pp')
+            product_data: {
+              currency: 'gbp',
+              product: 'prod_QNBe7Yrb9D1Jh9',
+              name: 'Bike Hire',
+              description: format(new Date(timeSlot), 'Pp')
+            }
           }
         }
       )),
