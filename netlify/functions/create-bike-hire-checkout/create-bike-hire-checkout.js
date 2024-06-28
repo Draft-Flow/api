@@ -31,8 +31,8 @@ export const handler = async (event, context, callback) => {
           price_data: {
             tax_behavior: 'inclusive',
             unit_amount: 1500,
+            currency: 'gbp',
             product_data: {
-              currency: 'gbp',
               product: 'prod_QNBe7Yrb9D1Jh9',
               name: 'Bike Hire',
               description: format(new Date(timeSlot), 'Pp')
