@@ -1,4 +1,4 @@
-import {format} from 'date-fns'
+import {format, addHours} from 'date-fns'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -34,7 +34,7 @@ export const handler = async (event, context, callback) => {
             currency: 'gbp',
             product_data: {
               name: 'Bike Hire',
-              description: format(new Date(timeSlot), 'Pp')
+              description: `${format(new Date(timeSlot), 'Pp')} - ${format(addHours(new Date(timeSlot), 4), 'p')}`
             }
           }
         }
