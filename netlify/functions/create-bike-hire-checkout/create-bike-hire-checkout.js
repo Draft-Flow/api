@@ -33,7 +33,6 @@ export const handler = async (event, context, callback) => {
             unit_amount: 1500,
             currency: 'gbp',
             product_data: {
-              product: 'prod_QNBe7Yrb9D1Jh9',
               name: 'Bike Hire',
               description: format(new Date(timeSlot), 'Pp')
             }
