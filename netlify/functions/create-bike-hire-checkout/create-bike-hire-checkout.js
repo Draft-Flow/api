@@ -1,3 +1,5 @@
+import {format} from 'date-fns'
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type',
@@ -18,17 +20,20 @@ export const handler = async (event, context, callback) => {
   try {
     const data = JSON.parse(event.body)
     const {selectedTimes, page} = data
-
+    
     const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items: [
+      line_items: selectedTimes.map(timeSlot => (
         {
           price: 'price_1PWRGmGzWQ51ogSj1OO610PE',
-          quantity: selectedTimes.length,
-        },
-      ],
+          quantity: 1,
+          product_data: {
+            description: format(new Date(timeSlot), 'Pp')
+          }
+        }
+      )),
       metadata: {
         selectedTimes: JSON.stringify(selectedTimes),
       },
