@@ -19,7 +19,7 @@ export const handler = async (event, context, callback) => {
   
   try {
     const data = JSON.parse(event.body)
-    const {selectedTimes, page} = data
+    const {selectedTimes, bike, page} = data
     
     const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
@@ -33,7 +33,7 @@ export const handler = async (event, context, callback) => {
             unit_amount: 1500,
             currency: 'gbp',
             product_data: {
-              name: 'Bike Hire',
+              name: `Bike Hire - ${bike}`,
               description: `${format(new Date(timeSlot), 'Pp')} - ${format(addHours(new Date(timeSlot), 4), 'p')}`
             }
           }
