@@ -62,7 +62,7 @@ export const handler = async (event, context, callback) => {
       automatic_tax: {
         enabled: true,
       },
-      success_url: `${page}/confirmed?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${page}confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: page,
       billing_address_collection: 'required',
       shipping_address_collection: {
