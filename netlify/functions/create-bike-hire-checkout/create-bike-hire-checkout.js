@@ -19,7 +19,7 @@ export const handler = async (event, context, callback) => {
   
   try {
     const data = JSON.parse(event.body)
-    const {selectedTimes, bike, page} = data
+    const {selectedTimes, bike, bikeID, calendarID, page} = data
     
     const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
@@ -41,6 +41,8 @@ export const handler = async (event, context, callback) => {
       )),
       metadata: {
         selectedTimes: JSON.stringify(selectedTimes),
+        bikeID: bikeID,
+        calendarID: calendarID,
       },
       allow_promotion_codes: true,
       automatic_tax: {
