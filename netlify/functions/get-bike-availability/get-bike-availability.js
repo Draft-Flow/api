@@ -48,11 +48,11 @@ export const handler = async (event, context) => {
   for (let i = 1; i < 90; i++) {
     const date = addDays(new Date(), i)
     // Create morning and afternoon time slots
-    const morningStartTime = `${format(date, "yyyy-MM-dd")}T09:00:00`
+    const morningStartTime = `${format(date, "yyyy-MM-dd")}T10:00:00`
     const morningEndTime = `${format(date, "yyyy-MM-dd")}T13:00:00`
     // Create afternoon time slots
     const afternoonStartTime = `${format(date, "yyyy-MM-dd")}T14:00:00`
-    const afternoonEndTime = `${format(date, "yyyy-MM-dd")}T18:00:00`
+    const afternoonEndTime = `${format(date, "yyyy-MM-dd")}T17:00:00`
     timeSlots.push({
       start: morningStartTime,
       end: morningEndTime
